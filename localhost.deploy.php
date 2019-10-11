@@ -24,13 +24,13 @@ set('default_stage', 'develop');
 // localhost for dev
 localhost('localhost-dev')
     ->stage('develop')
-    ->set('deploy_path', '/Users/tecokimura/Documents/project/deployer-test/for-dev')
+    ->set('deploy_path', '/Users/tecokimura/project/deployer-test/for-dev')
     ;
 
 // localhost for pro
 localhost('localhost-pro')
     ->stage('production')
-    ->set('deploy_path', '/Users/tecokimura/Documents/project/deployer-test/for-pro')
+    ->set('deploy_path', '/Users/tecokimura/project/deployer-test/for-pro')
     ;
 
 // Tasks
@@ -40,7 +40,7 @@ task('test', [
     'deploy:prepare',
     'deploy:lock',
     'deploy:release',
-    // 'deploy:update_code',
+    'deploy:update_code',
     'deploy:shared',
     'deploy:writable',
     // 'deploy:vendors',
