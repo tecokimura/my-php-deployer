@@ -3,11 +3,11 @@ namespace Deployer;
 
 require 'recipe/common.php';
 
-// Project name
-set('application', 'local-deploy-test');
+// プロジェクト名
+set('application', 'local-deploy');
 
-// Project repository
-set('repository', 'https://github.com/tecokimura/my-php-deployer.git');
+// プロジェクトリポジトリ
+set('repository', 'https://github.com/deployphp/deployer.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true);
@@ -19,23 +19,32 @@ set('shared_dirs', []);
 // Writable dirs by web server
 set('writable_dirs', []);
 
+// デフォルトのステージ（環境）
 set('default_stage', 'develop');
 
+// 現在のディレクトリ位置を保存
+set('current_dir', realpath(''));
+
+// ロールバックできる世代数 
+set('keep_releases', 3);
+
 // localhost for dev
-localhost('localhost-dev')
+localhost('local-dev')
     ->stage('develop')
-    ->set('deploy_path', '/Users/tecokimura/project/deployer-test/for-dev')
+    ->set('branch', 'next')
+    ->set('deploy_path', get('current_dir').'/dev')
     ;
 
 // localhost for pro
-localhost('localhost-pro')
+localhost('local-pro')
     ->stage('production')
-    ->set('deploy_path', '/Users/tecokimura/project/deployer-test/for-pro')
+    ->set('branch', 'master')
+    ->set('deploy_path', get('current_dir').'/pro')
     ;
 
 // Tasks
 desc('Deploy your project');
-task('test', [
+task('deploy', [
     'deploy:info',
     'deploy:prepare',
     'deploy:lock',
